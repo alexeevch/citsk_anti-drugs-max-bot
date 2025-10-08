@@ -22,7 +22,7 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: anti_drugs_db
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U user -d db" ]
+      test: [ "CMD-SHELL", "pg_isready -U user -d anti_drugs_db" ]
       interval: 3s
       timeout: 3s
       retries: 10
