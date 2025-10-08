@@ -1,0 +1,28 @@
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: anti-drugs-bot
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - botnet
+
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    container_name: anti-drugs-db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - botnet
+
+networks:
+  botnet:
+
+volumes:
+  pgdata:

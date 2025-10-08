@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  user_id    Int      @id
+  first_name String
+  last_name  String?
+  username   String?
+  is_bot     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  complaints Complaint[]
+}
+
+model Category {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+
+  complaints Complaint[]
+}
+
+model District {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+  complaints Complaint[]
+}
+
+model Complaint {
+  id          Int      @id @default(autoincrement())
+  user        User     @relation(fields: [user_id], references: [user_id])
+  user_id     Int
+  category    Category @relation(fields: [category_id], references: [id])
+  category_id Int
+  district    District @relation(fields: [district_id], references: [id])
+  district_id Int
+  photo_url   String?
+  latitude    Float?
+  longitude   Float?
+  message     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
