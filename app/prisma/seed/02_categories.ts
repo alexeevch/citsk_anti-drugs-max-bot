@@ -2,29 +2,15 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const categories = [
-  {
-    name: "Надпись на постройке",
-    description:
-      "Сообщение о незаконной или агитационной надписи на стене, здании или другом объекте.",
-  },
-  {
-    name: "Размещение клада",
-    description: "Фиксация факта закладки подозрительных предметов, свёртков или пакетов.",
-  },
-  {
-    name: "Другое",
-    description: "Другая категория, не попадающая под основные направления обращений.",
-  },
-];
+const categories = ["Нарконадписи", "Правонарушение", "Интернет-площадки"];
 
 export async function seedCategories() {
   console.log("Seeding Categories...");
-  for (const c of categories) {
+  for (const name of categories) {
     await prisma.category.upsert({
-      where: { name: c.name },
-      update: { description: c.description },
-      create: { name: c.name, description: c.description },
+      where: { name },
+      update: {},
+      create: { name },
     });
   }
   console.log("Seeding Categories complete.");

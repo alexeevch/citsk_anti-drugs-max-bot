@@ -8,44 +8,44 @@ datasource db {
 }
 
 model User {
-  user_id    Int      @id
+  id         Int       @id @default(autoincrement())
+  user_id    Int       @unique
   first_name String
   last_name  String?
   username   String?
-  is_bot     Boolean  @default(false)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  is_bot     Boolean   @default(false)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 
   complaints Complaint[]
 }
 
 model Category {
-  id          Int     @id @default(autoincrement())
-  name        String  @unique
-  description String?
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
 
-  complaints Complaint[]
+  complaints  Complaint[]
 }
 
 model District {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+  id          Int        @id @default(autoincrement())
+  name        String     @unique
 
-  complaints Complaint[]
+  complaints  Complaint[]
 }
 
 model Complaint {
-  id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [user_id], references: [user_id])
-  user_id     Int
-  category    Category @relation(fields: [category_id], references: [id])
-  category_id Int
-  district    District @relation(fields: [district_id], references: [id])
-  district_id Int
+  id          Int        @id @default(autoincrement())
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      Int
+  category    Category   @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  categoryId  Int
+  district    District   @relation(fields: [districtId], references: [id], onDelete: Restrict)
+  districtId  Int
   photo_url   String?
   latitude    Float?
   longitude   Float?
   message     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
