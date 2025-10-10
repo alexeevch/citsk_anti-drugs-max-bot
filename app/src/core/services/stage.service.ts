@@ -1,4 +1,4 @@
-import { stageRepository } from "~/modules/stage/stage.repository.js";
+import { stageRepository } from "~/core/repositories/stage.repository.js";
 
 export const stageService = {
   async getAllStages() {

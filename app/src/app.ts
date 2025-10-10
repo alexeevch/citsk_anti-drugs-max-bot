@@ -1,26 +1,13 @@
 import express from "express";
-import { Bot, Context } from "@maxhub/max-bot-api";
-
-interface MyContext extends Context {
-  isAdmin?: boolean;
-}
+import { Bot } from "@maxhub/max-bot-api";
+import type { ExtendedContext } from "~/shared/types/bot.types.js";
 
 export default function buildApp() {
   const app = express();
 
   app.use(express.json());
 
-  const bot = new Bot<MyContext>(String(process.env.BOT_TOKEN));
-
-  bot.on("message_created", (ctx) => {
-    console.log(ctx.user);
-    ctx.reply("Hello World!");
-  });
-
-  // bot.on("message_chat_created", (ctx) => {
-  //   console.log(ctx);
-  //   ctx.reply("Привет");
-  // });
+  const bot = new Bot<ExtendedContext>(String(process.env.BOT_TOKEN));
 
   bot.start().then((r) => console.error(r));
 

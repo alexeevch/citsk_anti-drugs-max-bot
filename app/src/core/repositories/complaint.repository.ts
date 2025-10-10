@@ -1,5 +1,5 @@
 import prisma from "~/core/database/prisma.client.js";
-import type { CreateComplaintPayload } from "./complaint.types.js";
+import type { CreateComplaintPayload } from "~/shared/types/entity.types.js";
 
 export const complaintRepository = {
   create: async (data: CreateComplaintPayload) => {
