@@ -16,8 +16,21 @@ services:
     container_name: anti-drugs-db
     volumes:
       - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
+    networks:
+      - botnet
+
+  redis:
+    image: redis:7-alpine
+    container_name: anti-drugs-redis
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - redisdata:/data
     networks:
       - botnet
 
@@ -26,3 +39,4 @@ networks:
 
 volumes:
   pgdata:
+  redisdata:

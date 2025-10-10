@@ -26,3 +26,16 @@ services:
       interval: 3s
       timeout: 3s
       retries: 10
+  redis:
+    environment:
+      TZ: Europe/Moscow
+    ports:
+      - "6380:6379"
+    command: redis-server --requirepass pass
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1024M
+        reservations:
+          memory: 512M
