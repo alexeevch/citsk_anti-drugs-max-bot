@@ -13,25 +13,35 @@ model User {
   firstName String
   lastName  String?
   username  String?
-  chatId   Int
+  chatId    Int
   isBot     Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  isBlocked Boolean  @default(false)
+
+  stageId Int?
+  stage   Stage? @relation(fields: [stageId], references: [id], onDelete: SetNull)
 
   complaints Complaint[]
 }
 
-model Category {
-  id   Int    @id @default(autoincrement())
-  name String @unique
+model Stage {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+  sort        Int     @default(0)
+  users       User[]
+}
 
+model Category {
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
   complaints Complaint[]
 }
 
 model District {
-  id   Int    @id @default(autoincrement())
-  name String @unique
-
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
   complaints Complaint[]
 }
 
@@ -43,10 +53,10 @@ model Complaint {
   categoryId Int
   district   District @relation(fields: [districtId], references: [id], onDelete: Restrict)
   districtId Int
-  photoUrl   String?
+  photoToken String?
   latitude   Float?
   longitude  Float?
-  message    String?
+  message    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 }
