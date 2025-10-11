@@ -1,9 +1,7 @@
 export interface CreateUserPayload {
   userId: number;
-  chatId: number;
+  chatId?: number | null;
   firstName: string;
-  lastName?: string;
-  username?: string;
   isBot: boolean;
 }
 
@@ -11,8 +9,11 @@ export interface CreateComplaintPayload {
   userId: number;
   categoryId: number;
   districtId: number;
-  photoUrl?: string;
-  latitude: number;
-  longitude: number;
+  latitude?: number;
+  longitude?: number;
   message: string;
+  photos?: {
+    token: string;
+    url: string;
+  }[];
 }
