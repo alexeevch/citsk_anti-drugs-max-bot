@@ -1,5 +1,5 @@
-import type { CreateUserPayload } from "~/modules/user/user.types.js";
 import prisma from "~/core/database/prisma.client.js";
+import type { CreateUserPayload } from "~/shared/types/entity.types.js";
 
 export const userRepository = {
   async sync(user: CreateUserPayload): Promise<void> {
