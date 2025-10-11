@@ -5,6 +5,7 @@ import type { Stage } from "~/bot/utils/enum.util.js";
 export interface ExtendedContext extends Context {
   sessionData: SessionData;
   user: UserBot;
+  userState: UserState;
 }
 
 export interface SessionData {
@@ -18,6 +19,18 @@ export interface SessionData {
   categoryId?: number;
   districtId?: number;
   message?: string;
+}
+
+export interface UserState {
+  lastMessages: number[];
+  reportsHour: number[];
+  reportsDay: number[];
+  bannedUntil?: number;
+  warningsSent?: {
+    messages?: boolean;
+    hourlyReports?: boolean;
+    dailyReports?: boolean;
+  };
 }
 
 //Расширил, т.к. на момент разработки типы библиотеки неактуальны
