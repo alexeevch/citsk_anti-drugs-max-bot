@@ -1,10 +1,11 @@
 import { categoryRepository } from "~/core/repositories/category.repository.js";
 import { Keyboard } from "@maxhub/max-bot-api";
 import { buildInlineKeyboard } from "~/bot/utils/keyboard.util.js";
-import type { ExtendedContext } from "~/shared/types/bot.types.js";
+import type { ExtendedContext, SessionData } from "~/bot/bot.types.js";
+import { Stage } from "~/bot/utils/enum.util.js";
 
 export const startController = async (ctx: ExtendedContext) => {
-  ctx.sessionData = {};
+  ctx.sessionData = {} as SessionData;
 
   const categories = await categoryRepository.findAll();
   const buttons = categories.map(({ id, name }) => {
@@ -13,5 +14,5 @@ export const startController = async (ctx: ExtendedContext) => {
   const keyboard = buildInlineKeyboard(buttons);
   await ctx.reply("Выберите **категорию**", { attachments: [keyboard], format: "markdown" });
 
-  ctx.sessionData.currentStage = "category_choose";
+  ctx.sessionData.currentStage = Stage.CategoryChoose;
 };

@@ -1,5 +1,5 @@
 import { redis } from "~/core/redis/redis.client.js";
-import type { ExtendedContext, SessionData } from "~/shared/types/bot.types.js";
+import type { ExtendedContext, SessionData } from "../bot.types.js";
 
 /**
  * Middleware для хранения сессии пользователя в Redis.
@@ -11,7 +11,7 @@ export const sessionMiddleware = async (ctx: ExtendedContext, next: () => Promis
   const raw = await redis.get(key);
   const original = raw ? (JSON.parse(raw) as SessionData) : {};
 
-  ctx.sessionData = { ...original };
+  ctx.sessionData = { ...original } as SessionData;
 
   try {
     await next();

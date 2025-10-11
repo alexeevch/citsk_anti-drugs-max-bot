@@ -1,6 +1,6 @@
 import { Bot } from "@maxhub/max-bot-api";
 import { botCommands } from "~/bot/utils/template.util.js";
-import type { ExtendedContext } from "~/shared/types/bot.types.js";
+import type { ExtendedContext } from "~/bot/bot.types.js";
 import { sessionMiddleware } from "~/bot/middleware/session.middleware.js";
 import { startController } from "~/bot/controllers/start.controller.js";
 import { botStartedController } from "~/bot/controllers/bot-started.controller.js";

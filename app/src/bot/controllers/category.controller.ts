@@ -1,8 +1,9 @@
-import type { ExtendedContext } from "~/shared/types/bot.types.js";
+import type { ExtendedContext } from "~/bot/bot.types.js";
 import { splitCallback } from "~/bot/utils/callback.util.js";
 import { Keyboard } from "@maxhub/max-bot-api";
 import { districtRepository } from "~/core/repositories/district.repository.js";
 import { buildInlineKeyboard } from "~/bot/utils/keyboard.util.js";
+import { Stage } from "~/bot/utils/enum.util.js";
 
 export const categoryController = async (ctx: ExtendedContext) => {
   if (ctx.sessionData.currentStage !== "category_choose") return;
@@ -25,5 +26,5 @@ export const categoryController = async (ctx: ExtendedContext) => {
   const keyboard = buildInlineKeyboard(buttons);
 
   await ctx.reply("Выберите район", { attachments: [keyboard] });
-  ctx.sessionData.currentStage = "district_choose";
+  ctx.sessionData.currentStage = Stage.DistrictChoose;
 };

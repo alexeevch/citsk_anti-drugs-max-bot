@@ -1,5 +1,6 @@
 import { Context } from "@maxhub/max-bot-api";
 import type { User } from "@maxhub/max-bot-api/types";
+import type { Stage } from "~/bot/utils/enum.util.js";
 
 export interface ExtendedContext extends Context {
   sessionData: SessionData;
@@ -7,8 +8,8 @@ export interface ExtendedContext extends Context {
 }
 
 export interface SessionData {
-  currentStage?: Stage;
-  photoToken?: string;
+  currentStage: Stage;
+  photos?: { token: string; url: string }[];
   complaintMessage?: string;
   coordinates?: {
     latitude: number;
@@ -16,18 +17,10 @@ export interface SessionData {
   };
   categoryId?: number;
   districtId?: number;
+  message?: string;
 }
 
 //Расширил, т.к. на момент разработки типы библиотеки неактуальны
 export type UserBot = User & {
   first_name: string;
 };
-
-export type Stage =
-  | "start"
-  | "category_choose"
-  | "district_choose"
-  | "complaint_description"
-  | "photo_send"
-  | "location_send"
-  | "finish";
