@@ -11,6 +11,7 @@ export interface CreateComplaintPayload {
   districtId: number;
   latitude?: number;
   longitude?: number;
+  location?: string;
   message: string;
   photos?: {
     token: string;
