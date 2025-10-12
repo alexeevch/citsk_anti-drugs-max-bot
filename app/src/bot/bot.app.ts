@@ -1,9 +1,10 @@
 import { Bot } from "@maxhub/max-bot-api";
 import { botCommands } from "~/bot/utils/template.util.js";
 import type { ExtendedContext } from "~/bot/bot.types.js";
-import { sessionMiddleware } from "~/bot/middleware/session.middleware.js";
+import { complaintMiddleware } from "~/bot/middleware/complaint.middleware.js";
 import { antiSpamMiddleware } from "~/bot/middleware/anti-spam.middleware.js";
 import { eventMiddleware } from "~/bot/middleware/event.middleware.js";
+import { stageMiddleware } from "~/bot/middleware/stage.middleware.js";
 
 export class MaxBotApp {
   private bot: Bot<ExtendedContext>;
@@ -38,9 +39,9 @@ export class MaxBotApp {
   }
 
   private async registerMiddlewares() {
-    this.bot.use(sessionMiddleware);
+    this.bot.use(complaintMiddleware);
+    this.bot.use(stageMiddleware);
     this.bot.use(antiSpamMiddleware);
-
     //eventMiddleware использовать всегда последним!
     this.bot.use(eventMiddleware);
   }
