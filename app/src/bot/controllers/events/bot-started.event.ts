@@ -1,12 +1,14 @@
-import type { ExtendedContext, SessionData } from "../../bot.types.js";
+import type { ExtendedContext, ComplaintDraft } from "../../bot.types.js";
 import { getBotStartedMessage } from "../../utils/template.util.js";
 import type { CreateUserPayload } from "~/shared/types/entity.types.js";
 import { userRepository } from "~/core/repositories/user.repository.js";
 import type { SceneContract } from "~/bot/contracts/scene.contract.js";
+import { Stage } from "~/bot/utils/enum.util.js";
 
-export const BotStartedScene: SceneContract = {
+export const BotStartedEvent: SceneContract = {
   async handle(ctx: ExtendedContext): Promise<void> {
-    ctx.sessionData = {} as SessionData;
+    ctx.currentStage = Stage.Suspense;
+    ctx.complaint = {} as ComplaintDraft;
 
     if (ctx.update.update_type !== "bot_started") {
       await ctx.reply("При запуске бота что-то пошло не так. Пожалуйста, попробуйте позже.");

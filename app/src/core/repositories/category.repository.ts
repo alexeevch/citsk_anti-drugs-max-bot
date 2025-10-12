@@ -10,4 +10,9 @@ export const categoryRepository = {
       86400 //24h
     );
   },
+
+  async findById(id: number): Promise<Category | null> {
+    const all = await this.findAll();
+    return all.find((c) => c.id === id) ?? null;
+  },
 };

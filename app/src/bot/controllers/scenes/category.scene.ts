@@ -5,29 +5,30 @@ import { districtRepository } from "~/core/repositories/district.repository.js";
 import { buildInlineKeyboard } from "~/bot/utils/keyboard.util.js";
 import { Stage } from "~/bot/utils/enum.util.js";
 import type { SceneContract } from "~/bot/contracts/scene.contract.js";
+import { districtChooseMessage } from "~/bot/utils/template.util.js";
 
 export const categoryScene: SceneContract = {
   async handle(ctx: ExtendedContext) {
-    if (ctx.sessionData.currentStage !== Stage.CategoryChoose) return;
+    if (ctx.currentStage !== Stage.CategoryChoose) return;
 
     const callbackPayload = ctx.callback?.payload;
 
     if (!callbackPayload) {
-      await ctx.reply("Произошла ошибка, попробуйте позже");
+      await ctx.reply("Пожалуйста, выберите категорию в сообщении выше.");
       return;
     }
 
-    ctx.sessionData.categoryId = Number(splitCallback(callbackPayload));
+    ctx.complaint.categoryId = Number(splitCallback(callbackPayload));
 
     const districts = await districtRepository.findAll();
 
-    const buttons = districts.map(({ id, name }) => {
-      return Keyboard.button.callback(name, `district:${id}`);
+    const buttons = districts.map((district) => {
+      return Keyboard.button.callback(district.name, `district:${district.id}`);
     });
 
     const keyboard = buildInlineKeyboard(buttons);
 
-    await ctx.reply("Выберите район", { attachments: [keyboard] });
-    ctx.sessionData.currentStage = Stage.DistrictChoose;
+    await ctx.reply(districtChooseMessage, { attachments: [keyboard], format: "markdown" });
+    ctx.currentStage = Stage.DistrictChoose;
   },
 };

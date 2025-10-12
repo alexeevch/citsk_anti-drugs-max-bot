@@ -3,8 +3,10 @@ import { Stage } from "~/bot/utils/enum.util.js";
 import { startCommand } from "~/bot/controllers/commands/start.command.js";
 import { COMMAND_REGEXP } from "~/shared/utils/regex.util.js";
 import { factoryCommand } from "~/bot/controllers/commands/factory.command.js";
+import { categoryScene } from "~/bot/controllers/scenes/category.scene.js";
+import { complaintMessageScene } from "~/bot/controllers/scenes/complaint-message.scene.js";
 
-export const MessageCreatedController = {
+export const MessageCreatedEvent = {
   async handle(ctx: ExtendedContext) {
     const messageText = ctx.message?.body.text;
 
@@ -14,13 +16,17 @@ export const MessageCreatedController = {
       return;
     }
 
-    const stage = ctx.sessionData?.currentStage;
+    const stage = ctx.currentStage;
 
     switch (stage) {
       case Stage.Start:
         return startCommand.handle(ctx);
+      case Stage.CategoryChoose:
+        return categoryScene.handle(ctx);
+      case Stage.ComplaintDescription:
+        return complaintMessageScene.handle(ctx);
       default:
-        await ctx.reply("Я не понимаю это сообщение 🤖");
+        return;
     }
   },
 };
