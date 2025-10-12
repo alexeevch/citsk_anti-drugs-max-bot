@@ -3,22 +3,22 @@ import type { User } from "@maxhub/max-bot-api/types";
 import type { Stage } from "~/bot/utils/enum.util.js";
 
 export interface ExtendedContext extends Context {
-  sessionData: SessionData;
+  complaint: ComplaintDraft;
   user: UserBot;
   userState: UserState;
+  currentStage: Stage;
 }
 
-export interface SessionData {
-  currentStage: Stage;
+export interface ComplaintDraft {
+  categoryId?: number;
+  districtId?: number;
+  message?: string;
+  location?: string;
   photos?: { token: string; url: string }[];
-  complaintMessage?: string;
   coordinates?: {
     latitude: number;
     longitude: number;
   };
-  categoryId?: number;
-  districtId?: number;
-  message?: string;
 }
 
 export interface UserState {
