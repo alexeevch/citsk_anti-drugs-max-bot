@@ -1,6 +1,7 @@
 import { redis } from "~/core/redis/redis.client.js";
 import { ANTI_SPAM_CONFIG } from "~/bot/bot.config.js";
 import type { ExtendedContext, UserState } from "~/bot/bot.types.js";
+import { Stage } from "~/bot/utils/enum.util.js";
 
 const {
   MESSAGE_LIMIT_PER_MINUTE,
@@ -101,7 +102,7 @@ export const antiSpamMiddleware = async (ctx: ExtendedContext, next: () => Promi
     state.warningsSent.dailyReports = false;
 
   // Логика активности
-  const isReport = ctx.sessionData?.currentStage === "finish";
+  const isReport = ctx.currentStage === Stage.Finish;
   if (isReport) {
     state.reportsHour.push(now);
     state.reportsDay.push(now);
