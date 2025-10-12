@@ -1,25 +1,28 @@
 import type { ExtendedContext } from "~/bot/bot.types.js";
-import { splitCallback } from "~/bot/utils/callback.util.js";
 import { Stage } from "~/bot/utils/enum.util.js";
 import type { SceneContract } from "~/bot/contracts/scene.contract.js";
 import { complaintDescriptionMessage } from "~/bot/utils/template.util.js";
-import { districtRepository } from "~/core/repositories/district.repository.js";
+import { convertStringToPayload } from "~/bot/utils/callback.util.js";
 
 export const districtScene: SceneContract = {
   async handle(ctx: ExtendedContext) {
     if (ctx.currentStage !== Stage.DistrictChoose) return;
 
-    const callbackPayload = ctx.callback?.payload;
+    const callbackRaw = ctx.callback?.payload;
 
-    if (!callbackPayload) {
-      await ctx.reply("Произошла ошибка, попробуйте позже");
+    if (!callbackRaw) {
+      await ctx.reply("Пожалуйста, выберите район из сообщения выше.");
       return;
     }
 
-    ctx.complaint.districtId = Number(splitCallback(callbackPayload));
-    const district = await districtRepository.findById(ctx.complaint.districtId);
+    const payloadData = convertStringToPayload(callbackRaw);
+    if (!payloadData) {
+      await ctx.reply("Не удалось получить район. Пожалуйста, попробуйте позже");
+    }
+    if (payloadData?.stage !== Stage.DistrictChoose) return;
+    ctx.complaint.district = { id: payloadData.id, name: payloadData.name };
 
-    await ctx.reply(`✅ Вы выбрали: **${district?.name}**`, { format: "markdown" });
+    await ctx.reply(`✅ Вы выбрали: **${payloadData?.name}**`, { format: "markdown" });
     await ctx.reply(complaintDescriptionMessage, { format: "markdown" });
     ctx.currentStage = Stage.ComplaintDescription;
   },
