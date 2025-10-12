@@ -3,6 +3,7 @@ import type { ExtendedContext } from "~/bot/bot.types.js";
 import { startCommand } from "~/bot/controllers/commands/start.command.js";
 import { helpCommand } from "~/bot/controllers/commands/help.command.js";
 import { Command } from "~/bot/utils/enum.util.js";
+import { rulesCommand } from "~/bot/controllers/commands/rules.command.js";
 
 export const factoryCommand: SceneContract = {
   async handle(ctx: ExtendedContext): Promise<void> {
@@ -14,6 +15,9 @@ export const factoryCommand: SceneContract = {
         break;
       case Command.Help:
         await helpCommand.handle(ctx);
+        break;
+      case Command.Rules:
+        await rulesCommand.handle(ctx);
         break;
       default:
         await ctx.reply("Такой команды не нашел, возможно, Вы опечатались.");
