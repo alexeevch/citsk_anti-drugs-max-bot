@@ -8,3 +8,9 @@ export enum Stage {
   LocationSend = "location_send",
   Finish = "finish",
 }
+
+export enum Command {
+  Start = "/start",
+  Help = "/help",
+  Rules = "/rules",
+}
