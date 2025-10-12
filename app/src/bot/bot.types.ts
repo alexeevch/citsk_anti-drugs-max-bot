@@ -10,8 +10,14 @@ export interface ExtendedContext extends Context {
 }
 
 export interface ComplaintDraft {
-  categoryId?: number;
-  districtId?: number;
+  category?: {
+    id: number;
+    name: string;
+  };
+  district?: {
+    id: number;
+    name: string;
+  };
   message?: string;
   location?: string;
   photos?: { token: string; url: string }[];
@@ -36,4 +42,10 @@ export interface UserState {
 //Расширил, т.к. на момент разработки типы библиотеки неактуальны
 export type UserBot = User & {
   first_name: string;
+};
+
+export type CallbackPayloadData = {
+  stage: Stage;
+  name: string;
+  id: number;
 };
