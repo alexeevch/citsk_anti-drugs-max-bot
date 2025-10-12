@@ -19,3 +19,8 @@ export const ANTI_SPAM_CONFIG = {
       `⚠️ Вы почти достигли дневного лимита отчётов (${count}/${limit}).`,
   },
 } as const;
+
+export const COMPLAINT_LIMITS = {
+  MAX_PHOTO_COUNT: 3,
+  MIN_MESSAGE_LENGTH: 14,
+};
