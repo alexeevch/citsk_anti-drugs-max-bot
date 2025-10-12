@@ -2,10 +2,8 @@ import { Bot } from "@maxhub/max-bot-api";
 import { botCommands } from "~/bot/utils/template.util.js";
 import type { ExtendedContext } from "~/bot/bot.types.js";
 import { sessionMiddleware } from "~/bot/middleware/session.middleware.js";
-import { startController } from "~/bot/controllers/start.controller.js";
-import { botStartedController } from "~/bot/controllers/bot-started.controller.js";
-import { helpController } from "~/bot/controllers/help.controller.js";
 import { antiSpamMiddleware } from "~/bot/middleware/anti-spam.middleware.js";
+import { eventMiddleware } from "~/bot/middleware/event.middleware.js";
 
 export class MaxBotApp {
   private bot: Bot<ExtendedContext>;
@@ -18,7 +16,6 @@ export class MaxBotApp {
     const app = new MaxBotApp(token);
     await app.setCommands();
     await app.registerMiddlewares();
-    app.registerHandlers();
     app.registerErrorHandler();
 
     return app;
@@ -41,14 +38,11 @@ export class MaxBotApp {
   }
 
   private async registerMiddlewares() {
-    this.bot.use(antiSpamMiddleware);
     this.bot.use(sessionMiddleware);
-  }
+    this.bot.use(antiSpamMiddleware);
 
-  private registerHandlers() {
-    this.bot.on("bot_started", botStartedController);
-    this.bot.command("start", startController);
-    this.bot.command("help", helpController);
+    //eventMiddleware использовать всегда последним!
+    this.bot.use(eventMiddleware);
   }
 
   private registerErrorHandler() {
