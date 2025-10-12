@@ -8,11 +8,16 @@ export const botStartedController = async (ctx: ExtendedContext) => {
 
   ctx.sessionData = {} as SessionData;
 
+  if (ctx.update.update_type !== "bot_started") {
+    await ctx.reply("При запуске бота что-то пошло не так. Пожалуйста, попробуйте позже.");
+    return;
+  }
+
   const me: CreateUserPayload = {
-    userId: ctx.user?.user_id,
-    chatId: ctx.update?.chat_id ?? null,
-    firstName: ctx.user?.first_name,
-    isBot: ctx.user?.is_bot,
+    userId: ctx.user.user_id,
+    chatId: ctx.update.chat_id,
+    firstName: ctx.user.first_name,
+    isBot: ctx.user.is_bot,
   };
 
   await userRepository.sync(me);
