@@ -62,7 +62,9 @@ function checkLimits(state: UserState): {
 
 export const antiSpamMiddleware = async (ctx: ExtendedContext, next: () => Promise<void>) => {
   const userId = ctx.user.user_id;
-  if (!userId) return next();
+  if (!userId || ctx.user.is_bot) {
+    return;
+  }
 
   const key = `user:${userId}`;
   const raw = await redis.get(key);
