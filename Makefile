@@ -7,6 +7,9 @@ help:
 build-dev: ## Сборка главного образа
 	docker build -f docker/dev.Dockerfile -t max-bot:dev .
 
+build-prod: ## Сборка главного образа prod
+	docker build -f docker/prod.Dockerfile -t max-bot:prod .
+
 up: ## Запуск локального окружения
 	docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
 
