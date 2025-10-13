@@ -21,6 +21,6 @@ export const ANTI_SPAM_CONFIG = {
 } as const;
 
 export const COMPLAINT_LIMITS = {
-  MAX_PHOTO_COUNT: 3,
+  MAX_PHOTO_COUNT: 5,
   MIN_MESSAGE_LENGTH: 14,
 };
