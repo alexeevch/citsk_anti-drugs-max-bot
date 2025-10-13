@@ -56,6 +56,5 @@ export const photoScene: SceneContract = {
     });
 
     ctx.currentStage = Stage.LocationSend;
-    console.log(ctx.complaint);
   },
 };
