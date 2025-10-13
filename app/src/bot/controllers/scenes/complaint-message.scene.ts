@@ -6,6 +6,7 @@ import { MINIMAL_MESSAGE_LENGTH_REGEXP } from "~/shared/utils/regex.util.js";
 import { Keyboard } from "@maxhub/max-bot-api";
 import { buildInlineKeyboard } from "~/bot/utils/keyboard.util.js";
 import { COMPLAINT_LIMITS } from "~/bot/bot.config.js";
+import { convertPayloadToString } from "~/bot/utils/callback.util.js";
 
 export const complaintMessageScene: SceneContract = {
   async handle(ctx: ExtendedContext) {
@@ -25,8 +26,18 @@ export const complaintMessageScene: SceneContract = {
       return;
     }
 
-    const photoSkipButton = Keyboard.button.callback("У меня нет фотографий", "photo:false");
+    ctx.complaint.message = messageText;
+
+    const photoSkipButton = Keyboard.button.callback(
+      "У меня нет фотографий",
+      convertPayloadToString({
+        stage: Stage.PhotoSend,
+        name: "photo",
+        id: 0,
+      })
+    );
     const keyboard = buildInlineKeyboard([photoSkipButton]);
+    await ctx.reply("✅ Описание нарушения принято");
     await ctx.reply(photoSendMessage, { attachments: [keyboard], format: "markdown" });
     ctx.currentStage = Stage.PhotoSend;
   },
