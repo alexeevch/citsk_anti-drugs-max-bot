@@ -5,6 +5,7 @@ import { COMMAND_REGEXP } from "~/shared/utils/regex.util.js";
 import { factoryCommand } from "~/bot/controllers/commands/factory.command.js";
 import { categoryScene } from "~/bot/controllers/scenes/category.scene.js";
 import { complaintMessageScene } from "~/bot/controllers/scenes/complaint-message.scene.js";
+import { photoScene } from "~/bot/controllers/scenes/photo.scene.js";
 
 export const MessageCreatedEvent = {
   async handle(ctx: ExtendedContext) {
@@ -25,6 +26,8 @@ export const MessageCreatedEvent = {
         return categoryScene.handle(ctx);
       case Stage.ComplaintDescription:
         return complaintMessageScene.handle(ctx);
+      case Stage.PhotoSend:
+        return photoScene.handle(ctx);
       default:
         return;
     }
