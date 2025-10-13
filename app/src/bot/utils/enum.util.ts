@@ -6,6 +6,7 @@ export enum Stage {
   ComplaintDescription = "complaint_description",
   PhotoSend = "photo_send",
   LocationSend = "location_send",
+  ComplaintSubmit = "complaint_submit",
   Finish = "finish",
 }
 

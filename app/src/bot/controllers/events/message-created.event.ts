@@ -6,6 +6,8 @@ import { factoryCommand } from "~/bot/controllers/commands/factory.command.js";
 import { categoryScene } from "~/bot/controllers/scenes/category.scene.js";
 import { complaintMessageScene } from "~/bot/controllers/scenes/complaint-message.scene.js";
 import { photoScene } from "~/bot/controllers/scenes/photo.scene.js";
+import { locationScene } from "~/bot/controllers/scenes/location.scene.js";
+import { complaintSubmitScene } from "~/bot/controllers/scenes/complaint-submit.scene.js";
 
 export const MessageCreatedEvent = {
   async handle(ctx: ExtendedContext) {
@@ -28,6 +30,10 @@ export const MessageCreatedEvent = {
         return complaintMessageScene.handle(ctx);
       case Stage.PhotoSend:
         return photoScene.handle(ctx);
+      case Stage.LocationSend:
+        return locationScene.handle(ctx);
+      case Stage.ComplaintSubmit:
+        return complaintSubmitScene.handle(ctx);
       default:
         return;
     }

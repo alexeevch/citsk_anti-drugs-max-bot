@@ -21,7 +21,7 @@ export const complaintMessageScene: SceneContract = {
 
     if (messageText && !MINIMAL_MESSAGE_LENGTH_REGEXP.test(messageText)) {
       await ctx.reply(
-        `Минимальная длинная сообщения - ${COMPLAINT_LIMITS.MIN_MESSAGE_LENGTH} символов. Пожалуйста, дополните описание проблемы.`
+        `Минимальная длина сообщения - ${COMPLAINT_LIMITS.MIN_MESSAGE_LENGTH} символов. Пожалуйста, дополните описание проблемы.`
       );
       return;
     }

@@ -3,6 +3,7 @@ import { Stage } from "~/bot/utils/enum.util.js";
 import { categoryScene } from "~/bot/controllers/scenes/category.scene.js";
 import { districtScene } from "~/bot/controllers/scenes/district.scene.js";
 import { photoScene } from "~/bot/controllers/scenes/photo.scene.js";
+import { complaintSubmitScene } from "~/bot/controllers/scenes/complaint-submit.scene.js";
 
 export const MessageCallbackEvent = {
   async handle(ctx: ExtendedContext) {
@@ -15,6 +16,8 @@ export const MessageCallbackEvent = {
         return districtScene.handle(ctx);
       case Stage.PhotoSend:
         return photoScene.handle(ctx);
+      case Stage.ComplaintSubmit:
+        return complaintSubmitScene.handle(ctx);
       default:
         return;
     }

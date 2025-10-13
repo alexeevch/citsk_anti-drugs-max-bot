@@ -1,10 +1,10 @@
+import type { ComplaintDraft, ExtendedContext } from "~/bot/bot.types.js";
+import type { SceneContract } from "~/bot/contracts/scene.contract.js";
 import { categoryRepository } from "~/core/repositories/category.repository.js";
 import { Keyboard } from "@maxhub/max-bot-api";
 import { buildInlineKeyboard } from "~/bot/utils/keyboard.util.js";
-import type { ComplaintDraft, ExtendedContext } from "~/bot/bot.types.js";
 import { Stage } from "~/bot/utils/enum.util.js";
 import { startMessage } from "~/bot/utils/template.util.js";
-import type { SceneContract } from "~/bot/contracts/scene.contract.js";
 import { convertPayloadToString } from "~/bot/utils/callback.util.js";
 
 export const startCommand: SceneContract = {
