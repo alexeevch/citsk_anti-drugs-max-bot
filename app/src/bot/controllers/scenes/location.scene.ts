@@ -18,7 +18,7 @@ export const locationScene: SceneContract = {
 
     if (attachments && attachments[0]) {
       if (attachments[0].type !== "location") {
-        await ctx.reply("Неверный формат вложения. Требуется геолокация.");
+        await ctx.reply("⚠ Неверный формат вложения. Я жду геолокацию или текст.");
         return;
       }
 
@@ -31,7 +31,7 @@ export const locationScene: SceneContract = {
     if (messageText) {
       if (!MINIMAL_ADDRESS_LENGTH_REGEXP.test(messageText)) {
         await ctx.reply(
-          `Минимальная длина адреса - ${COMPLAINT_LIMITS.MIN_ADDRESS_LENGTH} символов.`
+          `⚠ Минимальная длина адреса - ${COMPLAINT_LIMITS.MIN_ADDRESS_LENGTH} символов. Попробуйте втиснуться в эти рамки.`
         );
         return;
       }

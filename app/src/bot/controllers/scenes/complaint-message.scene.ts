@@ -15,13 +15,13 @@ export const complaintMessageScene: SceneContract = {
     const messageText = ctx.message?.body.text;
 
     if (!messageText) {
-      await ctx.reply("Пожалуйста, опишите проблему.");
+      await ctx.reply("⚠ Пожалуйста, опишите проблему.");
       return;
     }
 
     if (messageText && !MINIMAL_MESSAGE_LENGTH_REGEXP.test(messageText)) {
       await ctx.reply(
-        `Минимальная длина сообщения - ${COMPLAINT_LIMITS.MIN_MESSAGE_LENGTH} символов. Пожалуйста, дополните описание проблемы.`
+        `⚠ Минимальная длина сообщения - ${COMPLAINT_LIMITS.MIN_MESSAGE_LENGTH} символов. Пожалуйста, дополните описание проблемы.`
       );
       return;
     }

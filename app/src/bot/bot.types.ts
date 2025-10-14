@@ -21,10 +21,7 @@ export interface ComplaintDraft {
   message?: string;
   location?: string;
   photos?: { token: string; url: string }[];
-  coordinates?: {
-    latitude: number;
-    longitude: number;
-  };
+  coordinates?: Coordinates;
 }
 
 export interface UserState {
@@ -42,6 +39,11 @@ export interface UserState {
 //Расширил, т.к. на момент разработки типы библиотеки неактуальны
 export type UserBot = User & {
   first_name: string;
+};
+
+export type Coordinates = {
+  latitude: number;
+  longitude: number;
 };
 
 export type CallbackPayloadData = {

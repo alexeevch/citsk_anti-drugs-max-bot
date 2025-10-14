@@ -1,5 +1,5 @@
 import type { ExtendedContext, ComplaintDraft } from "../../bot.types.js";
-import { getBotStartedMessage } from "../../utils/template.util.js";
+import { errorMessage, getBotStartedMessage } from "../../utils/template.util.js";
 import type { CreateUserPayload } from "~/shared/types/entity.types.js";
 import { userRepository } from "~/core/repositories/user.repository.js";
 import type { SceneContract } from "~/bot/contracts/scene.contract.js";
@@ -11,7 +11,7 @@ export const BotStartedEvent: SceneContract = {
     ctx.complaint = {} as ComplaintDraft;
 
     if (ctx.update.update_type !== "bot_started") {
-      await ctx.reply("При запуске бота что-то пошло не так. Пожалуйста, попробуйте позже.");
+      await ctx.reply(errorMessage);
       return;
     }
 
@@ -22,8 +22,13 @@ export const BotStartedEvent: SceneContract = {
       isBot: ctx.user.is_bot,
     };
 
-    await userRepository.sync(me);
+    const user = await userRepository.sync(me);
 
-    await ctx.reply(getBotStartedMessage(me.firstName), { format: "markdown" });
+    if (!user) {
+      await ctx.reply(errorMessage);
+      return;
+    }
+
+    await ctx.reply(getBotStartedMessage(user.firstName), { format: "markdown" });
   },
 };

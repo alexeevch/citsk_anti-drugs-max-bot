@@ -14,14 +14,16 @@ export const categoryScene: SceneContract = {
     const callbackRaw = ctx.callback?.payload;
 
     if (!callbackRaw) {
-      await ctx.reply("Пожалуйста, выберите категорию в сообщении выше.");
+      await ctx.reply("⚠ Пожалуйста, выберите категорию в сообщении выше.");
       return;
     }
 
     const payloadData = convertStringToPayload(callbackRaw);
     if (!payloadData) {
-      await ctx.reply("Не удалось получить категорию. Пожалуйста, попробуйте позже");
+      await ctx.reply("⚠ Не удалось получить категорию. Пожалуйста, попробуйте позже");
+      return;
     }
+
     if (payloadData?.stage !== Stage.CategoryChoose) return;
     ctx.complaint.category = { id: payloadData.id, name: payloadData.name };
 
