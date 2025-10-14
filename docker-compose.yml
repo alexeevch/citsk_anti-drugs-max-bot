@@ -14,6 +14,9 @@ services:
     image: postgres:16
     restart: unless-stopped
     container_name: anti-drugs-db
+    environment:
+      TZ: Europe/Moscow
+      PGTZ: Europe/Moscow
     volumes:
       - pgdata:/var/lib/postgresql/data
     networks:
@@ -22,6 +25,8 @@ services:
   redis:
     image: redis:7-alpine
     container_name: anti-drugs-redis
+    environment:
+      TZ: Europe/Moscow
     healthcheck:
       test: [ "CMD", "redis-cli", "ping" ]
       interval: 30s
