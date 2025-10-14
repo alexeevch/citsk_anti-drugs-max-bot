@@ -7,23 +7,43 @@ help:
 build-dev: ## Сборка главного образа
 	docker build -f docker/dev.Dockerfile -t max-bot:dev .
 
-build-prod: ## Сборка главного образа prod
-	docker build -f docker/prod.Dockerfile -t max-bot:prod .
+up-dev: ## Запуск локального окружения
+	docker compose -f docker-compose.yml -f docker-compose.override.dev.yml up -d
 
-up: ## Запуск локального окружения
-	docker compose -f docker-compose.yml -f docker-compose.override.yml up -d
+down-dev: ## Остановка локального окружения
+	docker compose -f docker-compose.yml -f docker-compose.override.dev.yml down
 
-down: ## Остановка локального окружения
-	docker compose -f docker-compose.yml -f docker-compose.override.yml down
+status-dev: ## Статус контейнеров
+	docker compose -f docker-compose.yml -f docker-compose.override.dev.yml ps
 
-status: ## Статус контейнеров
-	docker compose -f docker-compose.yml -f docker-compose.override.yml ps
+restart-dev: ## Перезапуск локального окружения
+	docker compose -f docker-compose.yml -f docker-compose.override.dev.yml restart
 
-restart: ## Перезапуск локального окружения
-	docker compose -f docker-compose.yml -f docker-compose.override.yml restart
+cli-dev: ## Подключение к консоли php-fpm контейнера
+	docker compose -f docker-compose.yml -f docker-compose.override.dev.yml exec bot bash
 
-cli: ## Подключение к консоли php-fpm контейнера
-	docker compose -f docker-compose.yml -f docker-compose.override.yml exec bot bash
+logs-dev: ## Просмотр логов
+	docker compose -f docker-compose.yml -f docker-compose.override.dev.yml logs -f
 
-logs: ## Просмотр логов
-	docker compose -f docker-compose.yml -f docker-compose.override.yml logs -f
+
+
+build-prod: ## Сборка главного образа
+	docker build -f docker/dev.Dockerfile -t max-bot:prod .
+
+up-prod: ## Запуск локального окружения
+	docker compose -f docker-compose.yml -f docker-compose.override.prod.yml up -d
+
+down-prod: ## Остановка локального окружения
+	docker compose -f docker-compose.yml -f docker-compose.override.prod.yml down
+
+status-prod: ## Статус контейнеров
+	docker compose -f docker-compose.yml -f docker-compose.override.prod.yml ps
+
+restart-prod: ## Перезапуск локального окружения
+	docker compose -f docker-compose.yml -f docker-compose.override.prod.yml restart
+
+cli-prod: ## Подключение к консоли php-fpm контейнера
+	docker compose -f docker-compose.yml -f docker-compose.override.prod.yml exec bot bash
+
+logs-prod: ## Просмотр логов
+	docker compose -f docker-compose.yml -f docker-compose.override.prod.yml logs -f
