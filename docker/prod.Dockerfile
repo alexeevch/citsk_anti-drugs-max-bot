@@ -29,7 +29,10 @@ COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/prisma ./prisma
 
 COPY docker/ecosystem.config.cjs ./ecosystem.config.cjs
+COPY docker/entrypoint.sh ./entrypoint.sh
+
+RUN chmod +x ./entrypoint.sh
 
 ENV NODE_ENV=production
 
-CMD ["pm2-runtime", "ecosystem.config.cjs"]
+ENTRYPOINT ["./entrypoint.sh"]
