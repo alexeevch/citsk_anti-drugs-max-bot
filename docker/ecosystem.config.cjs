@@ -2,11 +2,12 @@ module.exports = {
     apps: [
         {
             name: "anti-drugs-bot",
-            script: "dist/app.js",
+            script: "dist/index.js",
             exec_mode: "fork",
             instances: 1,
             watch: false,
             autorestart: true,
+            restart_delay: 5000,
             max_memory_restart: "512M",
             env: {
                 NODE_ENV: "production",
