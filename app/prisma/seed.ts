@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import { seedDistricts } from "./seed/01_districts";
-import { seedCategories } from "./seed/02_categories";
+import { seedDistricts } from "./seed/01_districts.js";
+import { seedCategories } from "./seed/02_categories.js";
 
 const prisma = new PrismaClient();
 
