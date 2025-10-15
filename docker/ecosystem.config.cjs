@@ -2,7 +2,7 @@ module.exports = {
     apps: [
         {
             name: "anti-drugs-bot",
-            script: "dist/index.js",
+            script: "dist/src/index.js",
             exec_mode: "fork",
             instances: 1,
             watch: false,
