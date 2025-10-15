@@ -10,13 +10,15 @@ mkdir -p /app/logs
 echo "⏳ Waiting for database connection..."
 npx prisma db push --accept-data-loss
 
+#npx prisma migrate resolve --applied "20251011191931_init"
+
 # Запускаем миграции Prisma
 echo "📦 Running Prisma migrations..."
 npx prisma migrate deploy
 
 # Запускаем сидинг базы данных
 echo "🌱 Running database seeding..."
-npm run prisma:seed
+npx prisma db seed
 
 echo "✅ Database setup completed!"
 
