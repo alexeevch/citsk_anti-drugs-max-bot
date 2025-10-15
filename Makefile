@@ -28,7 +28,7 @@ logs-dev: ## Просмотр логов
 
 
 build-prod: ## Сборка главного образа
-	docker build -f docker/dev.Dockerfile -t max-bot:prod .
+	docker compose -f docker-compose.yml -f docker-compose.override.prod.yml build --no-cache
 
 up-prod: ## Запуск локального окружения
 	docker compose -f docker-compose.yml -f docker-compose.override.prod.yml up -d
